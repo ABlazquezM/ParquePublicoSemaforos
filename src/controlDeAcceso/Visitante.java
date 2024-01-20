@@ -2,10 +2,10 @@ package controlDeAcceso;
 
 public class Visitante extends Thread {
 
-	// contador de todas las visitas que acceden al parque
+	// Creamos el contador de todas las visitas que acceden al parque
 	private static int contadorGlobal = 0;
 
-	// Número específico de este visitante
+	//Y el número específico de este visitante
 	private int numeroVisitantes;
 
 	public Visitante(String nombre) {
