@@ -3,6 +3,7 @@ package controlDeAcceso;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 public class Torno extends Thread {
 
@@ -48,6 +49,8 @@ public class Torno extends Thread {
 		int numeroAleatorio = random.nextInt(200) + 1;
 		return numeroAleatorio;
 	}
+	
+	private Semaphore semaforoMutex = new Semaphore(1);
 
 	public void run() {
 
@@ -58,7 +61,7 @@ public class Torno extends Thread {
 				////// AÑADIDO///////
 				// Llamamos al semáfono para que uno a uno se vayan poninendo en la cola de
 				////// entrada
-				Parque.semaforoMutex.acquire();
+				semaforoMutex.acquire();
 
 				// Creamos un nuevo visitante
 				Visitante visitante = new Visitante("Visitante");
@@ -68,7 +71,7 @@ public class Torno extends Thread {
 				System.out.println("El visitante " + visitante.getNumeroVisitantes() + " está en la cola.");
 
 				// Liberamos el semáforo para permitir que otros visitantes accedan
-				Parque.semaforoMutex.release();
+				semaforoMutex.release();
 
 				// Y añadimos un sleep para simular la espera en la cola antes de entrar
 				sleep(1000);
@@ -78,7 +81,7 @@ public class Torno extends Thread {
 
 					// Llamamos de nuevo al semaforo esta vez para dejar pasar de uno en uno a los
 					// visitantes que ya están en la cola
-					Parque.semaforoMutex.acquire();
+					semaforoMutex.acquire();
 
 					// Incrementamos el contador de flujo por cada torno
 					flujo++;
@@ -92,7 +95,7 @@ public class Torno extends Thread {
 							+ visitanteEnCola.getNumeroVisitantes() + "__");
 
 					// Y dejamos libre el torno
-					Parque.semaforoMutex.release();
+					semaforoMutex.release();
 				}
 
 			} catch (InterruptedException e) {

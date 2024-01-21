@@ -15,7 +15,7 @@ public class Parque {
 	 */
 
 	// Creamos un semáforo para controlar el acceso a recursos compartidos
-	public static Semaphore semaforoMutex = new Semaphore(1);
+	//public static Semaphore semaforoMutex = new Semaphore(1);
 
 	public static void main(String[] args) {
 		// Determinamos el tiempo que el parque estará abierto
